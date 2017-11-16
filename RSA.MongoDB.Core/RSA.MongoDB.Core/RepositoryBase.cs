@@ -15,8 +15,8 @@ namespace RSA.MongoDB.Core
     {
         protected readonly MongoConnectionHandler<T> MongoConnectionHandler;
 
-        public RepositoryBase(IOptions<RepositoryOptions> repositoryConfiguration)
-            : this(repositoryConfiguration.Value.ConnectionString, repositoryConfiguration.Value.DatabaseName)
+        public RepositoryBase(IOptions<RepositoryOptions> repositoryConfiguration, string collectionName = null)
+            : this(repositoryConfiguration.Value.ConnectionString, repositoryConfiguration.Value.DatabaseName, collectionName)
         {
         }
         protected RepositoryBase(string mongoDBConnectionString, string databaseName, string collectionName = null)
