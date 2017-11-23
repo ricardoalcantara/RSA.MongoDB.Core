@@ -128,25 +128,59 @@ namespace RSA.MongoDB.Core
             var filter = GetFilter().Eq(f => f.Id, entity.Id);
             await GetCollection().UpdateOneAsync(filter, updateDef);
         }
-        
-        public void UpdateMany(T entity, bool includeNull = false)
+
+        public void DeleteOne(T entity)
         {
-            UpdateMany(entity, entity, includeNull);
+            var filter = GetFilter().Eq(f => f.Id, entity.Id);
+            GetCollection().DeleteOne(filter);
         }
 
-        public async Task UpdateManyAsync(T entity, bool includeNull = false)
+        public void DeleteOne(FilterDefinition<T> filter)
         {
-            await UpdateManyAsync(entity, entity, includeNull);
+            GetCollection().DeleteOne(filter);
         }
 
-        public void UpdateMany(T entity, T newEntity, bool includeNull = false)
+        public void DeleteById(string id)
         {
-            throw new NotImplementedException();
+            var filter = GetFilter().Eq(f => f.Id, new ObjectId(id));
+            GetCollection().DeleteOne(filter);
         }
 
-        public async Task UpdateManyAsync(T entity, T newEntity, bool includeNull = false)
+        public async Task DeleteOneAsync(T entity)
         {
-            throw new NotImplementedException();
-        }        
+            var filter = GetFilter().Eq(f => f.Id, entity.Id);
+            await GetCollection().DeleteOneAsync(filter);
+        }
+
+        public async Task DeleteOneAsync(FilterDefinition<T> filter)
+        {
+            await GetCollection().DeleteOneAsync(filter);
+        }
+
+        public async Task DeleteByIdAsync(string id)
+        {
+            var filter = GetFilter().Eq(f => f.Id, new ObjectId(id));
+            await GetCollection().DeleteOneAsync(filter);
+        }
+
+        //public void UpdateMany(T entity, bool includeNull = false)
+        //{
+        //    UpdateMany(entity, entity, includeNull);
+        //}
+
+        //public async Task UpdateManyAsync(T entity, bool includeNull = false)
+        //{
+        //    await UpdateManyAsync(entity, entity, includeNull);
+        //}
+
+        //public void UpdateMany(T entity, T newEntity, bool includeNull = false)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public async Task UpdateManyAsync(T entity, T newEntity, bool includeNull = false)
+        //{
+        //    throw new NotImplementedException();
+        //}        
     }
 }
